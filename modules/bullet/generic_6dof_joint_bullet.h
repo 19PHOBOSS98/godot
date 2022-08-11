@@ -40,7 +40,7 @@
 class RigidBodyBullet;
 
 class Generic6DOFJointBullet : public JointBullet {
-	class btGeneric6DofSpring2Constraint *sixDOFConstraint;
+	class btGeneric6DofSpringConstraintQuaternion *sixDOFConstraint;
 
 	// First is linear second is angular
 	Vector3 limits_lower[2];
