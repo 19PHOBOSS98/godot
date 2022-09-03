@@ -57,8 +57,13 @@ btGeneric6DofSpringConstraintQuaternion : public btGeneric6DofSpring2Constraint{
 		BT_DECLARE_ALIGNED_ALLOCATOR()
 		btGeneric6DofSpringConstraintQuaternion(btRigidBody & rbA, btRigidBody & rbB, const btTransform& frameInA, const btTransform& frameInB, RotateOrder rotOrder = RO_XYZ);
 		btGeneric6DofSpringConstraintQuaternion(btRigidBody & rbB, const btTransform& frameInB, RotateOrder rotOrder = RO_XYZ);
-	protected :
 		void getInfo2(btConstraintInfo2 * info);
+
+		void set_use_global_rotation(bool p_value);////PHOBOSS:////
+		bool get_use_global_rotation();////PHOBOSS:////
+	protected:
+		bool using_global_rotation;////PHOBOSS:////
+		
 		int setAngularLimitsQuaternion(btConstraintInfo2 * info, int row_offset, const btTransform& transA, const btTransform& transB, const btVector3& linVelA, const btVector3& linVelB, const btVector3& angVelA, const btVector3& angVelB);
 		int get_limit_motor_info_quaternion(
 			btRotationalLimitMotor2 * limot,

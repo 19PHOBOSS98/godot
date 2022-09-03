@@ -751,6 +751,12 @@ void Generic6DOFJoint::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_flag_z", "flag", "value"), &Generic6DOFJoint::set_flag_z);
 	ClassDB::bind_method(D_METHOD("get_flag_z", "flag"), &Generic6DOFJoint::get_flag_z);
 
+	////PHOBOSS:////
+	ClassDB::bind_method(D_METHOD("set_use_global_rotation", "value"), &Generic6DOFJoint::set_use_global_rotation);
+	ClassDB::bind_method(D_METHOD("get_use_global_rotation"), &Generic6DOFJoint::get_use_global_rotation);
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "angular_spring/use_global_rotation"), "set_use_global_rotation", "get_use_global_rotation"); ////PHOBOSS:////
+	////PHOBOSS:////
+
 	ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "linear_limit_x/enabled"), "set_flag_x", "get_flag_x", FLAG_ENABLE_LINEAR_LIMIT);
 	ADD_PROPERTYI(PropertyInfo(Variant::REAL, "linear_limit_x/upper_distance"), "set_param_x", "get_param_x", PARAM_LINEAR_UPPER_LIMIT);
 	ADD_PROPERTYI(PropertyInfo(Variant::REAL, "linear_limit_x/lower_distance"), "set_param_x", "get_param_x", PARAM_LINEAR_LOWER_LIMIT);
@@ -951,6 +957,19 @@ bool Generic6DOFJoint::get_flag_z(Flag p_flag) const {
 	return flags_z[p_flag];
 }
 
+////PHOBOSS:////
+void Generic6DOFJoint::set_use_global_rotation(bool p_enabled) {
+	Generic6DOFJoint::using_global_rotation = p_enabled;
+	PhysicsServer::get_singleton()->generic_6dof_joint_set_use_global_rotation(get_joint(), p_enabled);
+	//using_global_rotation = p_enabled;
+
+	update_gizmo();
+}
+bool Generic6DOFJoint::get_use_global_rotation() const {
+	return PhysicsServer::get_singleton()->generic_6dof_joint_get_use_global_rotation(get_joint());
+}
+////PHOBOSS:////
+
 RID Generic6DOFJoint::_configure_joint(PhysicsBody *body_a, PhysicsBody *body_b) {
 	Transform gt = get_global_transform();
 	//Vector3 cone_twistpos = gt.origin;
@@ -980,7 +999,7 @@ RID Generic6DOFJoint::_configure_joint(PhysicsBody *body_a, PhysicsBody *body_b)
 		PhysicsServer::get_singleton()->generic_6dof_joint_set_flag(j, Vector3::AXIS_Y, PhysicsServer::G6DOFJointAxisFlag(i), flags_y[i]);
 		PhysicsServer::get_singleton()->generic_6dof_joint_set_flag(j, Vector3::AXIS_Z, PhysicsServer::G6DOFJointAxisFlag(i), flags_z[i]);
 	}
-
+	PhysicsServer::get_singleton()->generic_6dof_joint_set_use_global_rotation(j, Generic6DOFJoint::using_global_rotation);////PHOBOSS:////
 	return j;
 }
 
@@ -1074,4 +1093,6 @@ Generic6DOFJoint::Generic6DOFJoint() {
 	set_flag_z(FLAG_ENABLE_LINEAR_SPRING, false);
 	set_flag_z(FLAG_ENABLE_MOTOR, false);
 	set_flag_z(FLAG_ENABLE_LINEAR_MOTOR, false);
+
+	set_use_global_rotation(false); ////PHOBOSS:////
 }

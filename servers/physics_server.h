@@ -712,6 +712,11 @@ public:
 	virtual void generic_6dof_joint_set_flag(RID p_joint, Vector3::Axis, G6DOFJointAxisFlag p_flag, bool p_enable) = 0;
 	virtual bool generic_6dof_joint_get_flag(RID p_joint, Vector3::Axis, G6DOFJointAxisFlag p_flag) = 0;
 
+	////PHOBOSS:////should not be pure virtual functions, so that other physics servers dont need to implement these
+	virtual void generic_6dof_joint_set_use_global_rotation(RID p_joint, bool p_enabled) {}
+	virtual bool generic_6dof_joint_get_use_global_rotation(RID p_joint) { return false; }
+	////PHOBOSS:////
+
 	/* QUERY API */
 
 	enum AreaBodyStatus {

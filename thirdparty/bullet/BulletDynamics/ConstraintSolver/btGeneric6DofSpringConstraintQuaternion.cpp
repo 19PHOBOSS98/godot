@@ -55,6 +55,15 @@ btGeneric6DofSpringConstraintQuaternion::btGeneric6DofSpringConstraintQuaternion
 {
 }
 
+////PHOBOSS:////
+void btGeneric6DofSpringConstraintQuaternion::set_use_global_rotation(bool p_value) {
+	using_global_rotation = p_value;
+}
+bool btGeneric6DofSpringConstraintQuaternion::get_use_global_rotation() {
+	return using_global_rotation;
+}
+////PHOBOSS:////
+
 void btGeneric6DofSpringConstraintQuaternion::getInfo2(btConstraintInfo2* info)
 {
 	const btTransform& transA = m_rbA.getCenterOfMassTransform();
@@ -70,30 +79,36 @@ void btGeneric6DofSpringConstraintQuaternion::getInfo2(btConstraintInfo2* info)
 
 ///PHOBOSS: this function is based from btGeneric6DofSpring2Constraint's "setAngularLimits" function
 ///Here, quaternions are used to compute for the rotation error used to compute for the constraints
-int btGeneric6DofSpringConstraintQuaternion::setAngularLimitsQuaternion(btConstraintInfo2* info, int row_offset, const btTransform& transA, const btTransform& transB, const btVector3& linVelA, const btVector3& linVelB, const btVector3& angVelA, const btVector3& angVelB)
-{
+int btGeneric6DofSpringConstraintQuaternion::setAngularLimitsQuaternion(btConstraintInfo2 *info, int row_offset, const btTransform &transA, const btTransform &transB, const btVector3 &linVelA, const btVector3 &linVelB, const btVector3 &angVelA, const btVector3 &angVelB) {
 	int row = row_offset;
 
-	int cIdx[] = {2, 0, 1};///PHOBOSS: arbitrary, order doesn't actually matter here
+	int cIdx[] = { 2, 0, 1 }; ///PHOBOSS: arbitrary, order doesn't actually matter here
 
-	btVector3 body_a_axis[] = {transA.getBasis().getColumn(0), transA.getBasis().getColumn(1), transA.getBasis().getColumn(2)};  ////PHOBOSS: rotation axis should be body A's basis matrix
+	//PHOBOSS: interpret equilibrium rotation as global rotation
+	btVector3 body_axis[] = { btVector3(1.0, 0.0, 0.0), btVector3(0.0, 1.0, 0.0), btVector3(0.0, 0.0, 1.0) };
+	btQuaternion current_rotation_quat = (transB).getRotation();
+	if (!using_global_rotation) {
+		////PHOBOSS: rotation axis should be body A's basis matrix
+		body_axis[0] = transA.getBasis().getColumn(0);
+		body_axis[1] = transA.getBasis().getColumn(1);
+		body_axis[2] = transA.getBasis().getColumn(2);
+		current_rotation_quat = (transA.inverse() * transB).getRotation(); ///PHOBOSS: body B's rotation relative to body A
+	}
 
-	btQuaternion current_rotation_local_quat = (transA.inverse() * transB).getRotation();  ///PHOBOSS: body B's rotation relative to body A
+	btQuaternion equilibrium_rotation_quat = btQuaternion(m_angularLimits[1].m_equilibriumPoint, m_angularLimits[0].m_equilibriumPoint, m_angularLimits[2].m_equilibriumPoint);
 
-	btQuaternion local_equilibrium_rotation_quat = btQuaternion(m_angularLimits[1].m_equilibriumPoint, m_angularLimits[0].m_equilibriumPoint, m_angularLimits[2].m_equilibriumPoint);
-
-	btQuaternion rotation_change = local_equilibrium_rotation_quat * current_rotation_local_quat.inverse();	///PHOBOSS: I got this from DMGregory here: https://gamedev.stackexchange.com/questions/182850/rotate-rigidbody-to-face-away-from-camera-with-addtorque/182873#182873
+	btQuaternion rotation_change = equilibrium_rotation_quat * current_rotation_quat.inverse();
 
 	///btScalar angle = rotation_change.getAngleShortestPath();
-	btScalar angle = 0.0;                ///PHOBOSS: this is more robust for some reason
-	if (abs(rotation_change[3]) <= 1.0)  ///PHOBOSS: protection against NAN
+	btScalar angle = 0.0; ///PHOBOSS: this is more robust for some reason
+	if (abs(rotation_change[3]) <= 1.0) ///PHOBOSS: protection against NAN
 	{
 		angle = 2.0 * acos(rotation_change[3]);
 		if (angle > SIMD_PI)
 			angle -= 2.0 * SIMD_PI;
 	}
 	///PHOBOSS: I know, I should have passed the angle and calculated for the quaternion_axis (axis_q) separately inside "get_limit_motor_info_quaternion" but I think it wouldn't save much execution time anyways
-	
+
 	btVector3 axis_q = rotation_change.getAxis();
 	btVector3 vec_angle_error = axis_q * angle;
 
@@ -105,29 +120,22 @@ int btGeneric6DofSpringConstraintQuaternion::setAngularLimitsQuaternion(btConstr
 	///btVector3 D = m_rbB.getAngularVelocity() - m_rbA.getAngularVelocity() * -1.0;
 	///btVector3 calculated_spring_velocity = P + D;
 	///btVector3 calculated_spring_impulse = reduced_moment_of_inertia * calculated_spring_velocity;
-	
 
-	for (int ii = 0; ii < 3; ii++)
-	{
+	for (int ii = 0; ii < 3; ii++) {
 		int i = cIdx[ii];
-		if (m_angularLimits[i].m_currentLimit || m_angularLimits[i].m_enableMotor || m_angularLimits[i].m_enableSpring)
-		{
-			btVector3 axis = body_a_axis[i];
+		if (m_angularLimits[i].m_currentLimit || m_angularLimits[i].m_enableMotor || m_angularLimits[i].m_enableSpring) {
+			btVector3 axis = body_axis[i];
 			int flags = m_flags >> ((i + 3) * BT_6DOF_FLAGS_AXIS_SHIFT2);
-			if (!(flags & BT_6DOF_FLAGS_CFM_STOP2))
-			{
+			if (!(flags & BT_6DOF_FLAGS_CFM_STOP2)) {
 				m_angularLimits[i].m_stopCFM = info->cfm[0];
 			}
-			if (!(flags & BT_6DOF_FLAGS_ERP_STOP2))
-			{
+			if (!(flags & BT_6DOF_FLAGS_ERP_STOP2)) {
 				m_angularLimits[i].m_stopERP = info->erp;
 			}
-			if (!(flags & BT_6DOF_FLAGS_CFM_MOTO2))
-			{
+			if (!(flags & BT_6DOF_FLAGS_CFM_MOTO2)) {
 				m_angularLimits[i].m_motorCFM = info->cfm[0];
 			}
-			if (!(flags & BT_6DOF_FLAGS_ERP_MOTO2))
-			{
+			if (!(flags & BT_6DOF_FLAGS_ERP_MOTO2)) {
 				m_angularLimits[i].m_motorERP = info->erp;
 			}
 
