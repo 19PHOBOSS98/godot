@@ -716,7 +716,6 @@ public:
 	virtual void generic_6dof_joint_set_use_global_rotation(RID p_joint, bool p_enabled) {}
 	virtual bool generic_6dof_joint_get_use_global_rotation(RID p_joint) { return false; }
 
-
 	/* QUERY API */
 
 	enum AreaBodyStatus {

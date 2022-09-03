@@ -955,7 +955,6 @@ bool Generic6DOFJoint::get_flag_z(Flag p_flag) const {
 	return flags_z[p_flag];
 }
 
-
 void Generic6DOFJoint::set_use_global_rotation(bool p_enabled) {
 	Generic6DOFJoint::using_global_rotation = p_enabled;
 	PhysicsServer::get_singleton()->generic_6dof_joint_set_use_global_rotation(get_joint(), p_enabled);
@@ -963,10 +962,10 @@ void Generic6DOFJoint::set_use_global_rotation(bool p_enabled) {
 
 	update_gizmo();
 }
+
 bool Generic6DOFJoint::get_use_global_rotation() const {
 	return PhysicsServer::get_singleton()->generic_6dof_joint_get_use_global_rotation(get_joint());
 }
-
 
 RID Generic6DOFJoint::_configure_joint(PhysicsBody *body_a, PhysicsBody *body_b) {
 	Transform gt = get_global_transform();

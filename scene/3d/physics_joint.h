@@ -326,11 +326,9 @@ public:
 	void set_flag_z(Flag p_flag, bool p_enabled);
 	bool get_flag_z(Flag p_flag) const;
 
-
 	bool using_global_rotation;
 	void set_use_global_rotation(bool enable);
 	bool get_use_global_rotation() const;
-
 
 	Generic6DOFJoint();
 };
