@@ -375,10 +375,10 @@ public:
 	virtual void generic_6dof_joint_set_flag(RID p_joint, Vector3::Axis p_axis, G6DOFJointAxisFlag p_flag, bool p_enable);
 	virtual bool generic_6dof_joint_get_flag(RID p_joint, Vector3::Axis p_axis, G6DOFJointAxisFlag p_flag);
 
-	////PHOBOSS:////
+
 	virtual void generic_6dof_joint_set_use_global_rotation(RID p_joint, bool p_enable);
 	virtual bool generic_6dof_joint_get_use_global_rotation(RID p_joint);
-	////PHOBOSS:////
+
 
 	/* MISC */
 

@@ -262,11 +262,11 @@ bool Generic6DOFJointBullet::get_flag(Vector3::Axis p_axis, PhysicsServer::G6DOF
 	return flags[p_axis][p_flag];
 }
 
-////PHOBOSS:////
+
 void Generic6DOFJointBullet::set_use_global_rotation(bool p_value) {
 	sixDOFConstraint->set_use_global_rotation(p_value);
 }
 bool Generic6DOFJointBullet::get_use_global_rotation() {
 	return sixDOFConstraint->get_use_global_rotation();
 }
-////PHOBOSS:////
+

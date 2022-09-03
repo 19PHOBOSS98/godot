@@ -1479,7 +1479,7 @@ bool BulletPhysicsServer::generic_6dof_joint_get_flag(RID p_joint, Vector3::Axis
 	return generic_6dof_joint->get_flag(p_axis, p_flag);
 }
 
-////PHOBOSS:////
+
 void BulletPhysicsServer::generic_6dof_joint_set_use_global_rotation(RID p_joint, bool p_enable) {
 	JointBullet *joint = joint_owner.get(p_joint);
 	ERR_FAIL_COND(!joint);
@@ -1495,7 +1495,7 @@ bool BulletPhysicsServer::generic_6dof_joint_get_use_global_rotation(RID p_joint
 	Generic6DOFJointBullet *generic_6dof_joint = static_cast<Generic6DOFJointBullet *>(joint);
 	return generic_6dof_joint->get_use_global_rotation();
 }
-////PHOBOSS:////
+
 
 void BulletPhysicsServer::free(RID p_rid) {
 	if (!p_rid.is_valid()) {

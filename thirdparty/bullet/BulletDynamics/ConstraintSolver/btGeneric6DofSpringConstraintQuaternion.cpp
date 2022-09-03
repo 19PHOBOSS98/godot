@@ -55,14 +55,14 @@ btGeneric6DofSpringConstraintQuaternion::btGeneric6DofSpringConstraintQuaternion
 {
 }
 
-////PHOBOSS:////
+
 void btGeneric6DofSpringConstraintQuaternion::set_use_global_rotation(bool p_value) {
 	using_global_rotation = p_value;
 }
 bool btGeneric6DofSpringConstraintQuaternion::get_use_global_rotation() {
 	return using_global_rotation;
 }
-////PHOBOSS:////
+
 
 void btGeneric6DofSpringConstraintQuaternion::getInfo2(btConstraintInfo2* info)
 {

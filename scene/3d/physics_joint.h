@@ -326,11 +326,11 @@ public:
 	void set_flag_z(Flag p_flag, bool p_enabled);
 	bool get_flag_z(Flag p_flag) const;
 
-	////PHOBOSS:////
-	bool Generic6DOFJoint::using_global_rotation;
-	void Generic6DOFJoint::set_use_global_rotation(bool enable);
-	bool Generic6DOFJoint::get_use_global_rotation() const;
-	////PHOBOSS:////
+
+	bool using_global_rotation;
+	void set_use_global_rotation(bool enable);
+	bool get_use_global_rotation() const;
+
 
 	Generic6DOFJoint();
 };

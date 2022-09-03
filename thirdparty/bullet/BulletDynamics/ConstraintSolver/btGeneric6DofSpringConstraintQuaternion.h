@@ -59,10 +59,10 @@ btGeneric6DofSpringConstraintQuaternion : public btGeneric6DofSpring2Constraint{
 		btGeneric6DofSpringConstraintQuaternion(btRigidBody & rbB, const btTransform& frameInB, RotateOrder rotOrder = RO_XYZ);
 		void getInfo2(btConstraintInfo2 * info);
 
-		void set_use_global_rotation(bool p_value);////PHOBOSS:////
-		bool get_use_global_rotation();////PHOBOSS:////
+		void set_use_global_rotation(bool p_value);
+		bool get_use_global_rotation();
 	protected:
-		bool using_global_rotation;////PHOBOSS:////
+		bool using_global_rotation;
 		
 		int setAngularLimitsQuaternion(btConstraintInfo2 * info, int row_offset, const btTransform& transA, const btTransform& transB, const btVector3& linVelA, const btVector3& linVelB, const btVector3& angVelA, const btVector3& angVelB);
 		int get_limit_motor_info_quaternion(
