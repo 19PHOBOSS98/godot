@@ -51,7 +51,7 @@ subject to the following restrictions:
 #include "btJacobianEntry.h"
 #include "btTypedConstraint.h"
 
-#include "core/math/Quat.h"
+#include <core/math/Quat.h>
 #include "LinearMath/btQuaternion.h"
 
 ATTRIBUTE_ALIGNED16(class)
