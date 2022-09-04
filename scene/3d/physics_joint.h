@@ -337,14 +337,12 @@ public:
 
 	void set_use_global_rotation(bool p_enabled);
 	bool get_use_global_rotation() const;
-	
+
 	void set_use_quaternion_rotation_equilibrium(bool p_enabled);
 	bool get_use_quaternion_rotation_equilibrium() const;
-	
+
 	void set_quaternion_rotation_equilibrium(Quat p_value);
 	Quat get_quaternion_rotation_equilibrium() const;
-
-	
 
 	Generic6DOFJoint();
 };
