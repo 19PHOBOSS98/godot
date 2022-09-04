@@ -117,6 +117,12 @@
 				self.set_param_z(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.z)
 			[/codeblock]
 		</member>
+		<member name="angular_spring/use_quaternion_rotation_equilibrium" type="bool" setter="set_use_quaternion_rotation_equilibrium" getter="get_use_quaternion_rotation_equilibrium" default="false">
+		Bongus
+		</member>
+		<member name="angular_spring/quaternion_rotation_equilibrium" type="Quat" setter="set_quaternion_rotation_equilibrium" getter="get_quaternion_rotation_equilibrium">
+		Floppa
+		</member>
 		<member name="angular_limit_x/damping" type="float" setter="set_param_x" getter="get_param_x" default="1.0">
 			The amount of rotational damping across the X axis.
 			The lower, the longer an impulse from one side takes to travel to the other side.
