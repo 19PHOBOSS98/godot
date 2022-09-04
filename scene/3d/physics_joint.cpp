@@ -1143,5 +1143,3 @@ Generic6DOFJoint::Generic6DOFJoint() {
 	set_use_quaternion_rotation_equilibrium(false);
 	set_quaternion_rotation_equilibrium(Quat());
 }
-
-
