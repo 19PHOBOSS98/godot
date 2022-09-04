@@ -69,11 +69,11 @@ void btGeneric6DofSpringConstraintQuaternion::set_use_quaternion_rotation_equili
 bool btGeneric6DofSpringConstraintQuaternion::get_use_quaternion_rotation_equilibrium() {
 	return using_quaternion_rotation_equilibrium;
 }
-void btGeneric6DofSpringConstraintQuaternion::set_quaternion_rotation_equilibrium(Quat p_value) {
-	quaternion_rotation_equilibrium = btQuaternion(p_value.x, p_value.y, p_value.z, p_value.w);
+void btGeneric6DofSpringConstraintQuaternion::set_quaternion_rotation_equilibrium(btQuaternion p_value) {
+	quaternion_rotation_equilibrium = p_value;
 }
-Quat btGeneric6DofSpringConstraintQuaternion::get_quaternion_rotation_equilibrium() {
-	return Quat(quaternion_rotation_equilibrium.x(),quaternion_rotation_equilibrium.y(),quaternion_rotation_equilibrium.z(),quaternion_rotation_equilibrium.w());
+btQuaternion btGeneric6DofSpringConstraintQuaternion::get_quaternion_rotation_equilibrium() {
+	return quaternion_rotation_equilibrium;
 }
 
 void btGeneric6DofSpringConstraintQuaternion::getInfo2(btConstraintInfo2* info)

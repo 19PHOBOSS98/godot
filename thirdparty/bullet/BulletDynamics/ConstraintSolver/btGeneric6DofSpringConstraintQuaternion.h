@@ -51,7 +51,6 @@ subject to the following restrictions:
 #include "btJacobianEntry.h"
 #include "btTypedConstraint.h"
 
-#include <core/math/Quat.h>
 #include "LinearMath/btQuaternion.h"
 
 ATTRIBUTE_ALIGNED16(class)
@@ -67,8 +66,8 @@ btGeneric6DofSpringConstraintQuaternion : public btGeneric6DofSpring2Constraint{
 
 		void set_use_quaternion_rotation_equilibrium(bool p_enable);
 		bool get_use_quaternion_rotation_equilibrium();
-		void set_quaternion_rotation_equilibrium(Quat p_value);
-		Quat get_quaternion_rotation_equilibrium();
+		void set_quaternion_rotation_equilibrium(btQuaternion p_value);
+		btQuaternion get_quaternion_rotation_equilibrium();
 
 	protected:
 		bool using_global_rotation;

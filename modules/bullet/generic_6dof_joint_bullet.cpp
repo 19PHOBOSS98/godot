@@ -36,6 +36,9 @@
 
 #include <BulletDynamics/ConstraintSolver/btGeneric6DofSpring2Constraint.h>
 #include <BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraintQuaternion.h>
+
+#include <LinearMath/btQuaternion.h>
+
 /**
 	@author AndreaCatania
 */
@@ -276,8 +279,10 @@ bool Generic6DOFJointBullet::get_use_quaternion_rotation_equilibrium() {
 	return sixDOFConstraint->get_use_quaternion_rotation_equilibrium();
 }
 void Generic6DOFJointBullet::set_quaternion_rotation_equilibrium(Quat p_value) {
-	sixDOFConstraint->set_quaternion_rotation_equilibrium(p_value);
+	btQuaternion q_value = btQuaternion(p_value.x, p_value.y, p_value.z, p_value.w);
+	sixDOFConstraint->set_quaternion_rotation_equilibrium(q_value);
 }
 Quat Generic6DOFJointBullet::get_quaternion_rotation_equilibrium() {
-	return sixDOFConstraint->get_quaternion_rotation_equilibrium();
+	btQuaternion q_value = sixDOFConstraint->get_quaternion_rotation_equilibrium();
+	return Quat(q_value.x(), q_value.y(), q_value.z(), q_value.w());
 }
