@@ -268,3 +268,16 @@ void Generic6DOFJointBullet::set_use_global_rotation(bool p_value) {
 bool Generic6DOFJointBullet::get_use_global_rotation() {
 	return sixDOFConstraint->get_use_global_rotation();
 }
+
+void Generic6DOFJointBullet::set_use_quaternion_rotation_equilibrium(bool p_enable) {
+	sixDOFConstraint->set_use_quaternion_rotation_equilibrium(p_enable);
+}
+bool Generic6DOFJointBullet::get_use_quaternion_rotation_equilibrium() {
+	return sixDOFConstraint->get_use_quaternion_rotation_equilibrium();
+}
+void Generic6DOFJointBullet::set_quaternion_rotation_equilibrium(Quat p_value) {
+	sixDOFConstraint->set_quaternion_rotation_equilibrium(p_value);
+}
+Quat Generic6DOFJointBullet::get_quaternion_rotation_equilibrium() {
+	return sixDOFConstraint->get_quaternion_rotation_equilibrium();
+}

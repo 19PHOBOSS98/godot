@@ -63,6 +63,18 @@ bool btGeneric6DofSpringConstraintQuaternion::get_use_global_rotation() {
 	return using_global_rotation;
 }
 
+void btGeneric6DofSpringConstraintQuaternion::set_use_quaternion_rotation_equilibrium(bool p_enable) {
+	using_quaternion_rotation_equilibrium = p_enable;
+}
+bool btGeneric6DofSpringConstraintQuaternion::get_use_quaternion_rotation_equilibrium() {
+	return using_quaternion_rotation_equilibrium;
+}
+void btGeneric6DofSpringConstraintQuaternion::set_quaternion_rotation_equilibrium(Quat p_value) {
+	quaternion_rotation_equilibrium = btQuaternion(p_value.x, p_value.y, p_value.z, p_value.w);
+}
+Quat btGeneric6DofSpringConstraintQuaternion::get_quaternion_rotation_equilibrium() {
+	return Quat(quaternion_rotation_equilibrium.x(),quaternion_rotation_equilibrium.y(),quaternion_rotation_equilibrium.z(),quaternion_rotation_equilibrium.w());
+}
 
 void btGeneric6DofSpringConstraintQuaternion::getInfo2(btConstraintInfo2* info)
 {
@@ -84,7 +96,7 @@ int btGeneric6DofSpringConstraintQuaternion::setAngularLimitsQuaternion(btConstr
 
 	int cIdx[] = { 2, 0, 1 }; ///PHOBOSS: arbitrary, order doesn't actually matter here
 
-	//PHOBOSS: interpret equilibrium rotation as global rotation
+	///PHOBOSS: interpret equilibrium rotation as global rotation
 	btVector3 body_axis[] = { btVector3(1.0, 0.0, 0.0), btVector3(0.0, 1.0, 0.0), btVector3(0.0, 0.0, 1.0) };
 	btQuaternion current_rotation_quat = (transB).getRotation();
 	if (!using_global_rotation) {
@@ -92,11 +104,13 @@ int btGeneric6DofSpringConstraintQuaternion::setAngularLimitsQuaternion(btConstr
 		body_axis[0] = transA.getBasis().getColumn(0);
 		body_axis[1] = transA.getBasis().getColumn(1);
 		body_axis[2] = transA.getBasis().getColumn(2);
-		current_rotation_quat = (transA.inverse() * transB).getRotation(); ///PHOBOSS: body B's rotation relative to body A
+		current_rotation_quat = (transA.inverse() * transB).getRotation(); ////PHOBOSS: body B's rotation relative to body A
 	}
-
-	btQuaternion equilibrium_rotation_quat = btQuaternion(m_angularLimits[1].m_equilibriumPoint, m_angularLimits[0].m_equilibriumPoint, m_angularLimits[2].m_equilibriumPoint);
-
+	btQuaternion equilibrium_rotation_quat = quaternion_rotation_equilibrium; ////PHOBOSS: faster
+	if (!using_quaternion_rotation_equilibrium) {
+		equilibrium_rotation_quat = btQuaternion(m_angularLimits[1].m_equilibriumPoint, m_angularLimits[0].m_equilibriumPoint, m_angularLimits[2].m_equilibriumPoint);
+	}
+	
 	btQuaternion rotation_change = equilibrium_rotation_quat * current_rotation_quat.inverse();
 
 	///btScalar angle = rotation_change.getAngleShortestPath();

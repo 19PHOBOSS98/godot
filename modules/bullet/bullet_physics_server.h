@@ -378,6 +378,11 @@ public:
 	virtual void generic_6dof_joint_set_use_global_rotation(RID p_joint, bool p_enable);
 	virtual bool generic_6dof_joint_get_use_global_rotation(RID p_joint);
 
+	virtual void generic_6dof_joint_set_use_quaternion_rotation_equilibrium(RID p_joint, bool p_enabled);
+	virtual bool generic_6dof_joint_get_use_quaternion_rotation_equilibrium(RID p_joint);
+	virtual void generic_6dof_joint_set_quaternion_rotation_equilibrium(RID p_joint, Quat p_value);
+	virtual Quat generic_6dof_joint_get_quaternion_rotation_equilibrium(RID p_joint);
+
 	/* MISC */
 
 	virtual void free(RID p_rid);

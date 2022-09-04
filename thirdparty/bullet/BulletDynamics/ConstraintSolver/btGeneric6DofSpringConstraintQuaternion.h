@@ -51,6 +51,9 @@ subject to the following restrictions:
 #include "btJacobianEntry.h"
 #include "btTypedConstraint.h"
 
+#include "core/math/Quat.h"
+#include "LinearMath/btQuaternion.h"
+
 ATTRIBUTE_ALIGNED16(class)
 btGeneric6DofSpringConstraintQuaternion : public btGeneric6DofSpring2Constraint{
 	public:
@@ -61,8 +64,16 @@ btGeneric6DofSpringConstraintQuaternion : public btGeneric6DofSpring2Constraint{
 
 		void set_use_global_rotation(bool p_value);
 		bool get_use_global_rotation();
+
+		void set_use_quaternion_rotation_equilibrium(bool p_enable);
+		bool get_use_quaternion_rotation_equilibrium();
+		void set_quaternion_rotation_equilibrium(Quat p_value);
+		Quat get_quaternion_rotation_equilibrium();
+
 	protected:
 		bool using_global_rotation;
+		bool using_quaternion_rotation_equilibrium;
+		btQuaternion quaternion_rotation_equilibrium;
 		
 		int setAngularLimitsQuaternion(btConstraintInfo2 * info, int row_offset, const btTransform& transA, const btTransform& transB, const btVector3& linVelA, const btVector3& linVelB, const btVector3& angVelA, const btVector3& angVelB);
 		int get_limit_motor_info_quaternion(
