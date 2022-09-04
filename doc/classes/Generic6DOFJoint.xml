@@ -111,10 +111,10 @@
 			If [code]true[/code], the set angular_spring [code]equilibrium_point[/code] will be interpreted as global rotation values, otherwise, they are interpreted as local rotation values.
 			This is useful for copying an objects global rotation using its [member Spatial.global_transform].
 			[codeblock]
-				var target_global_angles = get_node(puppeteer_node).global_transform.basis.get_rotation_quat().get_euler()
-				self.set_param_x(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.x)
-				self.set_param_y(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.y)
-				self.set_param_z(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.z)
+    var target_global_angles = get_node(puppeteer_node).global_transform.basis.get_rotation_quat().get_euler()
+    self.set_param_x(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.x)
+    self.set_param_y(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.y)
+    self.set_param_z(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.z)
 			[/codeblock]
 		</member>
 		<member name="angular_spring/use_quaternion_rotation_equilibrium" type="bool" setter="set_use_quaternion_rotation_equilibrium" getter="get_use_quaternion_rotation_equilibrium" default="false">
