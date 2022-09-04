@@ -9,12 +9,6 @@
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="get_use_global_rotation" qualifiers="const">
-			<return type="bool" />
-			<description>
-				Bingus.
-			</description>
-		</method>
 		<method name="get_flag_x" qualifiers="const">
 			<return type="bool" />
 			<argument index="0" name="flag" type="int" enum="Generic6DOFJoint.Flag" />
@@ -107,22 +101,6 @@
 		</method>
 	</methods>
 	<members>
-		<member name="angular_spring/use_global_rotation" type="bool" setter="set_use_global_rotation" getter="get_use_global_rotation" default="false">
-			If [code]true[/code], the set angular_spring [code]equilibrium_point[/code] will be interpreted as global rotation values, otherwise, they are interpreted as local rotation values.
-			This is useful for copying an objects global rotation using its [member Spatial.global_transform].
-			[codeblock]
-    var target_global_angles = get_node(puppeteer_node).global_transform.basis.get_rotation_quat().get_euler()
-    self.set_param_x(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.x)
-    self.set_param_y(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.y)
-    self.set_param_z(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.z)
-			[/codeblock]
-		</member>
-		<member name="angular_spring/use_quaternion_rotation_equilibrium" type="bool" setter="set_use_quaternion_rotation_equilibrium" getter="get_use_quaternion_rotation_equilibrium" default="false">
-		Bongus
-		</member>
-		<member name="angular_spring/quaternion_rotation_equilibrium" type="Quat" setter="set_quaternion_rotation_equilibrium" getter="get_quaternion_rotation_equilibrium">
-		Floppa
-		</member>
 		<member name="angular_limit_x/damping" type="float" setter="set_param_x" getter="get_param_x" default="1.0">
 			The amount of rotational damping across the X axis.
 			The lower, the longer an impulse from one side takes to travel to the other side.
@@ -222,6 +200,24 @@
 		</member>
 		<member name="angular_motor_z/target_velocity" type="float" setter="set_param_z" getter="get_param_z" default="0.0">
 			Target speed for the motor at the Z axis.
+		</member>
+		<member name="angular_spring/quaternion_rotation_equilibrium" type="Quat" setter="set_quaternion_rotation_equilibrium" getter="get_quaternion_rotation_equilibrium">
+			Optionally, the joint's rotation equilibrium maybe driven by using a quaternion instead. This is way faster than using Euler angles to drive joint rotation.
+			Note that this property only works with [member ProjectSettings.physics/3d/physics_engine] set to [code]Bullet[/code].
+		</member>
+		<member name="angular_spring/use_global_rotation" type="bool" setter="set_use_global_rotation" getter="get_use_global_rotation" default="false">
+			If [code]true[/code], the set angular spring [code]equilibrium_point[/code] will be interpreted as [b]global[/b] rotation values. Otherwise, they will be interpreted as local rotation values. This is useful for copying global rotations.
+			[codeblock]
+			var target_global_angles = get_node(puppeteer_node).global_transform.basis.get_rotation_quat().get_euler()
+			self.set_param_x(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.x)
+			self.set_param_y(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.y)
+			self.set_param_z(PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT,target_global_angles.z)
+			[/codeblock]
+			Note that this property only works with [member ProjectSettings.physics/3d/physics_engine] set to [code]Bullet[/code].
+		</member>
+		<member name="angular_spring/use_quaternion_rotation_equilibrium" type="bool" setter="set_use_quaternion_rotation_equilibrium" getter="get_use_quaternion_rotation_equilibrium" default="false">
+			If [code]true[/code], the set [member angular_spring/quaternion_rotation_equilibrium] will be used instead of Euler angles set through angular spring [code]equilibrium_point[/code]s. It is highly recomended to use this in favour of Euler angles as it is faster.
+			Note that this property only works with [member ProjectSettings.physics/3d/physics_engine] set to [code]Bullet[/code].
 		</member>
 		<member name="angular_spring_x/damping" type="float" setter="set_param_x" getter="get_param_x" default="0.0">
 			The dampening value for the angular spring characteristic around the X axis. This affects how much the angular spring joint oscillates before reaching its equilibrium angle. The higher the value the less oscillation. Please note that high damping values may adversely affect the joint arrangement when attached with "light" rigidbodies ([member RigidBody.mass] less than or equal to 1).
