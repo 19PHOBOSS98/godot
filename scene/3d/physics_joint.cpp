@@ -772,7 +772,6 @@ void Generic6DOFJoint::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "angular_spring/use_global_rotation"), "set_use_global_rotation", "get_use_global_rotation");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "angular_spring/use_quaternion_rotation_equilibrium"), "set_use_quaternion_rotation_equilibrium", "get_use_quaternion_rotation_equilibrium");
 	ADD_PROPERTY(PropertyInfo(Variant::QUAT, "angular_spring/quaternion_rotation_equilibrium"), "set_quaternion_rotation_equilibrium", "get_quaternion_rotation_equilibrium");
-	
 	ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "linear_limit_x/enabled"), "set_flag_x", "get_flag_x", FLAG_ENABLE_LINEAR_LIMIT);
 	ADD_PROPERTYI(PropertyInfo(Variant::REAL, "linear_limit_x/upper_distance"), "set_param_x", "get_param_x", PARAM_LINEAR_UPPER_LIMIT);
 	ADD_PROPERTYI(PropertyInfo(Variant::REAL, "linear_limit_x/lower_distance"), "set_param_x", "get_param_x", PARAM_LINEAR_LOWER_LIMIT);
