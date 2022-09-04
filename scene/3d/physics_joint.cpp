@@ -762,7 +762,7 @@ void Generic6DOFJoint::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("set_use_global_rotation", "enable"), &Generic6DOFJoint::set_use_global_rotation);
 	ClassDB::bind_method(D_METHOD("get_use_global_rotation"), &Generic6DOFJoint::get_use_global_rotation);
-	
+
 	ClassDB::bind_method(D_METHOD("set_use_quaternion_rotation_equilibrium", "enable"), &Generic6DOFJoint::set_use_quaternion_rotation_equilibrium);
 	ClassDB::bind_method(D_METHOD("get_use_quaternion_rotation_equilibrium"), &Generic6DOFJoint::get_use_quaternion_rotation_equilibrium);
 
